@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { mongo } = require('./vars');
+console.log(`mongoUri---`, mongo)
 
 // set mongoose Promise to Bluebird
 mongoose.Promise = Promise;
@@ -16,7 +17,7 @@ mongoose.connection.on('error', (err) => {
 * @public
 */
 exports.connect = () => {
-  mongoose.connect('mongodb+srv://MWA:mwa@123@cluster0.wfdtd4q.mongodb.net/?retryWrites=true&w=majority', {
+  mongoose.connect(mongo.uri, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,

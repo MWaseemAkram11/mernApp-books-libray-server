@@ -4,13 +4,11 @@ const methodOverride = require('method-override');
 const cors = require('cors');
 const frontRoutes = require('../api/routes/index');
 const rateLimit = require("express-rate-limit");
+const frontMiddleWare = require("../api/middlewares/auth")
 const bearerToken = require('express-bearer-token');
 const compression = require('compression');
 const app = express();
 
-const passport = require("passport");
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -22,7 +20,11 @@ const apiRequestLimiterAll = rateLimit({
   max: 90000
 });
 
+
 app.use("/", apiRequestLimiterAll);
+app.use(frontMiddleWare.tokenVerification);
+
+app.use(bearerToken());
 
 var corsOptions = {
   origin: '*',
