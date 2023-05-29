@@ -36,5 +36,6 @@ app.use(cors(corsOptions));
 app.use(compression());
 
 app.use('/system', frontRoutes);
+app.use('/system/get', `hellowworld`)
 
 module.exports = app;
